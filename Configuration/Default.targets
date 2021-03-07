@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(SolutionDir)Common\Configuration\Default.targets" />
+  <Target Name="CheckComPort">
+    <Exec Command="mode $(ComPort) &gt; nul" IgnoreExitCode="true">
+      <Output PropertyName="CheckComPortExitCode" TaskParameter="ExitCode" />
+    </Exec>
+    <PropertyGroup>
+      <ComPortPresent Condition="'$(CheckComPortExitCode)'=='0'">true</ComPortPresent>
+    </PropertyGroup>
+  </Target>
+  <Target Name="CompilerInit">
+    <SetEnv Name="CPATH" Value="$(IncludePath)" Prefix="false" />
+    <ItemGroup>
+      <CMakeIncludeList Include="%(ClCompile.AdditionalIncludeDirectories)" />
+    </ItemGroup>
+    <RemoveDuplicates Inputs="@(CMakeIncludeList)">
+      <Output TaskParameter="Filtered" ItemName="CMakeIncludeListFiltered" />
+    </RemoveDuplicates>
+    <PropertyGroup>
+      <SolutionDir>$([System.IO.Path]::GetFullPath('$(SolutionDir)'))</SolutionDir>
+      <IncludeDirs>@(CMakeIncludeListFiltered)</IncludeDirs>
+      <IncludeDirs>$(IncludeDirs.Replace('$(SolutionDir)', '../'))</IncludeDirs>
+      <IncludeDirs>$(IncludeDirs.Replace('\', '/'))</IncludeDirs>
+      <SourceFiles>@(ClCompile->'%(FullPath)')</SourceFiles>
+      <SourceFiles>$(SourceFiles.Replace('$(SolutionDir)', '../'))</SourceFiles>
+      <SourceFiles>$(SourceFiles.Replace('\', '/'))</SourceFiles>
+    </PropertyGroup>
+    <ItemGroup>
+      <IncludeList Include="$(IncludeDirs.Split(';'))" />
+      <SourceList Include="$(SourceFiles.Split(';'))" />
+    </ItemGroup>
+    <PropertyGroup>
+      <IncludeArg>@(IncludeList->'%(Identity)', '%0D%0A    ')</IncludeArg>
+      <PreprocessorArg>-D@(PreprocessorList->'%(Identity)', ' -D')</PreprocessorArg>
+      <SourceArg>@(SourceList->'%22%(Identity)%22', '%0D%0A    ')</SourceArg>
+    </PropertyGroup>
+  </Target>
+</Project>

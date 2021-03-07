@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Displays\Oled128x64.cpp">
+      <Filter>Devices\Displays</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Gpio\AnalogPin.cpp">
+      <Filter>Devices\Gpio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Gpio\OutputPin.cpp">
+      <Filter>Devices\Gpio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Gpio\PwmPin.cpp">
+      <Filter>Devices\Gpio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\Beeper.cpp">
+      <Filter>Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\Led.cpp">
+      <Filter>Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\Motor.cpp">
+      <Filter>Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\Servo.cpp">
+      <Filter>Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\StepperMotor.cpp">
+      <Filter>Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\Transistor.cpp">
+      <Filter>Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Flow\LiquidFlowMeter.cpp">
+      <Filter>Sensors\Flow</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Humidity\Dht.cpp">
+      <Filter>Sensors\Humidity</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Temperature\DS18B20.cpp">
+      <Filter>Sensors\Temperature</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Temperature\KTY-81-210.cpp">
+      <Filter>Sensors\Temperature</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Temperature\Pt1000.cpp">
+      <Filter>Sensors\Temperature</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Temperature\Thermometer.cpp">
+      <Filter>Sensors\Temperature</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Displays\Display.cpp">
+      <Filter>Devices\Displays</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Climate\Bme280.cpp">
+      <Filter>Sensors\Climate</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\OneWire.cpp">
+      <Filter>Devices</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Temperature\TemperaturePin.cpp">
+      <Filter>Sensors\Temperature</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Displays\Oled128x64.h">
+      <Filter>Devices\Displays</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Configuration\Default.targets">
+      <Filter>Configuration</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Gpio\AnalogPin.h">
+      <Filter>Devices\Gpio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Gpio\OutputPin.h">
+      <Filter>Devices\Gpio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Gpio\PwmPin.h">
+      <Filter>Devices\Gpio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\Beeper.h">
+      <Filter>Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\Led.h">
+      <Filter>Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\Motor.h">
+      <Filter>Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\Servo.h">
+      <Filter>Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\StepperMotor.h">
+      <Filter>Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\Transistor.h">
+      <Filter>Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Flow\LiquidFlowMeter.h">
+      <Filter>Sensors\Flow</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Humidity\Dht.h">
+      <Filter>Sensors\Humidity</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Temperature\DS18B20.h">
+      <Filter>Sensors\Temperature</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Temperature\KTY-81-210.h">
+      <Filter>Sensors\Temperature</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Temperature\Pt1000.h">
+      <Filter>Sensors\Temperature</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Temperature\Thermometer.h">
+      <Filter>Sensors\Temperature</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Displays\Display.h">
+      <Filter>Devices\Displays</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Climate\Bme280.h">
+      <Filter>Sensors\Climate</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\OneWire.h">
+      <Filter>Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Temperature\TemperaturePin.h">
+      <Filter>Sensors\Temperature</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Devices">
+      <UniqueIdentifier>{a639b32b-6d37-4b5a-972f-b559353045b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configuration">
+      <UniqueIdentifier>{b0179f0f-1dd4-4313-90e3-65bccc00a5fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Devices\Displays">
+      <UniqueIdentifier>{f3fe6690-a919-41a3-8154-b921fad7c8a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Devices\Gpio">
+      <UniqueIdentifier>{488f8c6f-6c61-4a41-9c5a-35d8c2a7ef11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Actors">
+      <UniqueIdentifier>{80fdcdc0-1121-4ba4-9817-75c9c2609d4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sensors">
+      <UniqueIdentifier>{8650eee1-e2be-4ec3-948f-d5e8d6e07b66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sensors\Flow">
+      <UniqueIdentifier>{125fc6ef-7423-4f62-bab1-a60d47d8b76c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sensors\Humidity">
+      <UniqueIdentifier>{d95a1997-19e0-4335-9b10-2a20769a97bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sensors\Temperature">
+      <UniqueIdentifier>{e1cf6cfd-fae2-474b-85a1-5b751f84c26a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sensors\Climate">
+      <UniqueIdentifier>{aab0bf69-b263-4385-8146-936126003add}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

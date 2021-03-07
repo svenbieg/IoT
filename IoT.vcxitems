@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{B59610F8-DF42-45BF-B08A-5E117DCC1764}</ItemsProjectGuid>
+    <ItemsSccProjectName>$/Shared/IoT</ItemsSccProjectName>
+    <ItemsSccAuxPath>https://svenbieg.visualstudio.com</ItemsSccAuxPath>
+    <ItemsSccLocalPath>.</ItemsSccLocalPath>
+    <ItemsSccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</ItemsSccProvider>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\Beeper.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\Led.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\Motor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\Servo.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\StepperMotor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Actors\Transistor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Displays\Display.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Displays\Oled128x64.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Gpio\AnalogPin.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Gpio\OutputPin.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\Gpio\PwmPin.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Devices\OneWire.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Climate\Bme280.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Flow\LiquidFlowMeter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Humidity\Dht.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Temperature\DS18B20.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Temperature\KTY-81-210.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Temperature\Pt1000.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Temperature\TemperaturePin.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sensors\Temperature\Thermometer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\Beeper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\Led.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\Motor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\Servo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\StepperMotor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Actors\Transistor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Configuration\Default.targets" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Displays\Display.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Displays\Oled128x64.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Gpio\AnalogPin.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Gpio\OutputPin.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\Gpio\PwmPin.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Devices\OneWire.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Climate\Bme280.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Flow\LiquidFlowMeter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Humidity\Dht.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Temperature\DS18B20.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Temperature\KTY-81-210.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Temperature\Pt1000.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Temperature\TemperaturePin.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sensors\Temperature\Thermometer.h" />
+  </ItemGroup>
+</Project>
