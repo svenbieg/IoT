@@ -50,12 +50,10 @@ Application::Current->Loop.Remove(this);
 
 VOID Display::OnLoop()
 {
-hDeviceContext->BeginPaint(hBitmap);
-hDeviceContext->Offset={ 0, 0 };
-hDeviceContext->Clip={ 0, 0, (INT)uWidth, (INT)uHeight };
+hDeviceContext->SetTarget(hBitmap);
 hDeviceContext->Clear(BackgroundColor);
 BOOL brendered=Content->Render(hDeviceContext);
-hDeviceContext->EndPaint();
+hDeviceContext->Flush();
 if(brendered)
 	this->Flush();
 }
