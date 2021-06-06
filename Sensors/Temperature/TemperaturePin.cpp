@@ -35,8 +35,8 @@ namespace Sensors {
 
 const FLOAT pKtyOhm[]=		{ 1630.f, 1772.f, 1922.f, 2000.f, 2080.f, 2245.f, 2417.f, 2597.f, 2785.f, 2980.f, 3118.f, 3392.f, 3817.f, 4008.f, 4166.f, 4280.f };
 const FLOAT pKtyTemp[]=		{    0.f,   10.f,   20.f,   25.f,   30.f,   40.f,   50.f,   60.f,   70.f,   80.f,   90.f,  100.f,  110.f,  120.f,  130.f,  140.f };
-const FLOAT pPtOhm[]=		{ 842.7f, 882.2f, 921.6f, 960.9f, 1000.f, 1039.f, 1077.9f, 1097.4f, 1116.7f, 1155.4f, 1194.f, 1232.4f, 1270.f, 1308.9f, 1347.f, 1385.f, 1422.f, 1460.6f, 1498.2f, 1535.8f, 1573.1f, 1620.f, 1660.f, 1700.f };
-const FLOAT pPtTemp[]=		{  -40.f,  -30.f,  -20.f,  -10.f,    0.f,   10.f,    20.f,    25.f,    30.f,    40.f,   50.f,    60.f,   70.f,    80.f,   90.f,  100.f,  110.f,   120.f,   130.f,   140.f,   150.f,  160.f,  170.f,  180.f };
+const FLOAT pPtOhm[]=		{ 842.7f, 882.2f, 921.6f, 960.9f, 1000.f, 1039.f, 1077.9f, 1097.4f, 1116.7f, 1155.4f, 1194.f, 1232.4f, 1270.f, 1308.9f, 1347.f, 1385.f, 1422.f, 1460.6f, 1498.2f, 1535.8f, 1573.1f, 1620.f, 1660.f, 1700.f, 1740.f, 1780.f, 1820.f };
+const FLOAT pPtTemp[]=		{  -40.f,  -30.f,  -20.f,  -10.f,    0.f,   10.f,    20.f,    25.f,    30.f,    40.f,   50.f,    60.f,   70.f,    80.f,   90.f,  100.f,  110.f,   120.f,   130.f,   140.f,   150.f,  160.f,  170.f,  180.f,  190.f,  200.f,  210.f };
 
 
 //==================
@@ -164,9 +164,9 @@ FLOAT TemperaturePin::VoltageToTemperature(FLOAT fvoltage)
 {
 FLOAT u=System::Voltage;
 FLOAT ur=u-fvoltage;
-FLOAT i=ur/4700.f;
+FLOAT i=ur/2200.f;
 FLOAT rges=u/i;
-FLOAT r=rges-4700;
+FLOAT r=rges-2200;
 FLOAT ftemp=-300.f;
 switch(uMode)
 	{
