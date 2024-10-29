@@ -35,7 +35,7 @@ public:
 private:
 	// Common
 	VOID OnPositionChanged();
-	BYTE uPin;
+	BYTE m_Pin;
 };
 
 }

@@ -38,10 +38,10 @@ TypedVariable(hname, ipercent)
 
 Handle<String> Humidity::ToString()
 {
-SharedLock lock(cMutex);
-if(tValue>100)
+SharedLock lock(m_Mutex);
+if(m_Value>100)
 	return "-";
-return new String("%i%%", tValue);
+return new String("%i%%", m_Value);
 }
 
 }

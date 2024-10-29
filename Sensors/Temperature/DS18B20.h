@@ -9,7 +9,7 @@
 // Using
 //=======
 
-#include "Core/Timer.h"
+#include "UI/Timer.h"
 #include "Devices/Gpio/OneWire.h"
 #include "Thermometer.h"
 
@@ -44,14 +44,14 @@ class DS18B20: public Thermometer
 private:
 	// Using
 	using OneWire=Devices::Gpio::OneWire;
-	using Timer=Core::Timer;
+	using Timer=UI::Timer;
 
 public:
 	// Con-/Destructors
 	DS18B20(Handle<String> Id, Handle<OneWire> Bus, UINT64 BusId, DS18B20Resolution Resolution=DS18B20Resolution::Bits12);
 
 	// Common
-	DS18B20Resolution GetResolution()const { return uResolution; }
+	DS18B20Resolution GetResolution()const { return m_Resolution; }
 	VOID SetResolution(DS18B20Resolution Resolution);
 
 private:
@@ -61,10 +61,10 @@ private:
 	VOID ReadResolution();
 	VOID ReadTemperature();
 	VOID WriteResolution();
-	Handle<OneWire> hOneWire;
-	Handle<Timer> hTimer;
-	UINT64 uId;
-	DS18B20Resolution uResolution;
+	UINT64 m_Id;
+	Handle<OneWire> m_OneWire;
+	DS18B20Resolution m_Resolution;
+	Handle<Timer> m_Timer;
 };
 
 }}

@@ -21,65 +21,65 @@ class Average
 {
 public:
 	// Con-/Destructors
-	Average(): tValue(0), uCount(0) {}
+	Average(): m_Count(0), m_Value(0) {}
 
 	// Access
-	operator _value_t()const { return tValue; }
-	UINT GetCount()const { return uCount; }
-	_value_t const* GetValues()const { return pValues; }
+	operator _value_t()const { return m_Value; }
+	UINT GetCount()const { return m_Count; }
+	_value_t const* GetValues()const { return m_Values; }
 
 	// Modification
 	Average& operator=(_value_t Value)
 		{
-		if(uCount<_count)
+		if(m_Count<_count)
 			{
-			pValues[uCount++]=Value;
+			m_Values[m_Count++]=Value;
 			}
 		else
 			{
-			MoveMemory(pValues, &pValues[1], (uCount-1)*sizeof(_value_t));
-			pValues[uCount-1]=Value;
+			MoveMemory(m_Values, &m_Values[1], (m_Count-1)*sizeof(_value_t));
+			m_Values[m_Count-1]=Value;
 			}
 		_value_t psorted[_count];
-		for(UINT u=0; u<uCount; u++)
+		for(UINT u=0; u<m_Count; u++)
 			{
 			BOOL bdone=false;
 			for(UINT s=0; s<u; s++)
 				{
-				if(pValues[u]<psorted[s])
+				if(m_Values[u]<psorted[s])
 					{
 					MoveMemory(&psorted[s+1], &psorted[s], (u-s-1)*sizeof(_value_t));
-					psorted[s]=pValues[u];
+					psorted[s]=m_Values[u];
 					bdone=true;
 					break;
 					}
 				}
 			if(bdone)
 				continue;
-			psorted[u]=pValues[u];
+			psorted[u]=m_Values[u];
 			}
 		_value_t t=0;
-		if(uCount>_ignore*2)
+		if(m_Count>_ignore*2)
 			{
-			for(UINT u=_ignore; u<uCount-_ignore; u++)
-				t+=pValues[u];
-			tValue=t/(uCount-_ignore*2);
+			for(UINT u=_ignore; u<m_Count-_ignore; u++)
+				t+=m_Values[u];
+			m_Value=t/(m_Count-_ignore*2);
 			}
 		else
 			{
-			for(UINT u=0; u<uCount; u++)
-				t+=pValues[u];
-			tValue=t/uCount;
+			for(UINT u=0; u<m_Count; u++)
+				t+=m_Values[u];
+			m_Value=t/m_Count;
 			}
 		return *this;
 		}
-	VOID Reset() { tValue=0; uCount=0; }
+	VOID Reset() { m_Value=0; m_Count=0; }
 
 private:
 	// Common
-	_value_t pValues[_count];
-	_value_t tValue;
-	UINT uCount;
+	UINT m_Count;
+	_value_t m_Value;
+	_value_t m_Values[_count];
 };
 
 }

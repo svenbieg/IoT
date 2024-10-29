@@ -31,11 +31,11 @@ namespace Devices {
 
 TouchPin::TouchPin(Handle<String> id, BYTE pin):
 GpioPin(id, pin),
-uAverage(0),
-uAvgCount(0)
+m_Average(0),
+m_AverageCount(0)
 {
 Value=new Bool(id);
-if(!TouchInit(uPin))
+if(!TouchInit(m_Pin))
 	return;
 auto clock=Clock::Get();
 clock->Tick.Add(this, &TouchPin::OnClockTick);
@@ -43,7 +43,7 @@ clock->Tick.Add(this, &TouchPin::OnClockTick);
 
 TouchPin::~TouchPin()
 {
-TouchClose(uPin);
+TouchClose(m_Pin);
 auto clock=Clock::Get();
 clock->Tick.Remove(this);
 }
@@ -61,24 +61,24 @@ value? Touched(this): Released(this);
 
 WORD TouchPin::GetTreshold()
 {
-if(uAvgCount>=32)
-	return uAverage;
-WORD value=TouchRead(uPin);
-uAverage+=value;
-uAvgCount++;
-if(uAvgCount<32)
+if(m_AverageCount>=32)
+	return m_Average;
+WORD value=TouchRead(m_Pin);
+m_Average+=value;
+m_AverageCount++;
+if(m_AverageCount<32)
 	return 0;
-uAverage=uAverage/32-100;
-if(uAverage<200)
+m_Average=m_Average/32-100;
+if(m_Average<200)
 	{
-	DebugPrint("Touch-Pin %u average too low\n", uPin);
-	TouchClose(uPin);
+	DebugPrint("Touch-Pin %u average too low\n", m_Pin);
+	TouchClose(m_Pin);
 	auto clock=Clock::Get();
 	clock->Tick.Remove(this);
 	return 0;
 	}
-TouchTreshold(uPin, uAverage);
-return uAverage;
+TouchTreshold(m_Pin, m_Average);
+return m_Average;
 }
 
 VOID TouchPin::OnClockTick()
@@ -86,12 +86,12 @@ VOID TouchPin::OnClockTick()
 WORD threshold=GetTreshold();
 if(!threshold)
 	return;
-WORD value=TouchRead(uPin);
+WORD value=TouchRead(m_Pin);
 BOOL b_new=value<threshold;
 BOOL b_old=Value;
 if(b_old==b_new)
 	return;
-Application::Current->Dispatch(this, &TouchPin::DoSet, b_new);
+Application::Current->Dispatch(this, [this, b_new]() { DoSet(b_new); });
 }
 
 }}

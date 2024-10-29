@@ -86,26 +86,26 @@ Thermometer(hid+".Temperature")
 Humidity=new Physics::Humidity(hid+".Humidity", -1);
 Pressure=new Physics::Pressure(hid+".Pressure", -1);
 BYTE id=0;
-ReadRegister(cSettings.I2cAddress, Bme280Register::Id, &id, 1);
+ReadRegister(m_Settings.I2cAddress, Bme280Register::Id, &id, 1);
 if(id!=0x60)
 	{
-	cSettings.I2cAddress=0;
+	m_Settings.I2cAddress=0;
 	return;
 	}
 BYTE buf[4];
-ReadRegister(cSettings.I2cAddress, Bme280Register::HumidityControl, buf, 4);
-ReadRegister(cSettings.I2cAddress, Bme280Register::TempPressCalibration, pCalibration, 26);
-ReadRegister(cSettings.I2cAddress, Bme280Register::HumidityCalibration, &pCalibration[26], 7);
+ReadRegister(m_Settings.I2cAddress, Bme280Register::HumidityControl, buf, 4);
+ReadRegister(m_Settings.I2cAddress, Bme280Register::TempPressCalibration, m_Calibration, 26);
+ReadRegister(m_Settings.I2cAddress, Bme280Register::HumidityCalibration, &m_Calibration[26], 7);
 if(psettings)
-	CopyMemory(&cSettings, psettings, sizeof(Bme280Settings));
+	CopyMemory(&m_Settings, psettings, sizeof(Bme280Settings));
 WriteDeviceSettings();
 Update();
-if(cSettings.Mode==Bme280Mode::Normal)
+if(m_Settings.Mode==Bme280Mode::Normal)
 	{
-	hTimer=new Timer();
-	hTimer->Triggered.Add(this, &Bme280::OnTimerTriggered);
-	UINT time=StandbyToMillis(cSettings.Standby);
-	hTimer->StartPeriodic(time);
+	m_Timer=new Timer();
+	m_Timer->Triggered.Add(this, &Bme280::OnTimerTriggered);
+	UINT time=StandbyToMillis(m_Settings.Standby);
+	m_Timer->StartPeriodic(time);
 	}
 }
 
@@ -116,25 +116,25 @@ if(cSettings.Mode==Bme280Mode::Normal)
 
 BOOL Bme280::IsPresent()
 {
-return cSettings.I2cAddress>0;
+return m_Settings.I2cAddress>0;
 }
 
 VOID Bme280::Sleep()
 {
-if(cSettings.I2cAddress==0)
+if(m_Settings.I2cAddress==0)
 	return;
-cSettings.Mode=Bme280Mode::Sleep;
+m_Settings.Mode=Bme280Mode::Sleep;
 WriteDeviceSettings();
 }
 
 VOID Bme280::Update()
 {
-if(cSettings.I2cAddress==0)
+if(m_Settings.I2cAddress==0)
 	return;
-if(cSettings.Mode==Bme280Mode::Forced)
+if(m_Settings.Mode==Bme280Mode::Forced)
 	WriteDeviceSettings();
 BYTE data[8];
-ReadRegister(cSettings.I2cAddress, Bme280Register::Data, data, 8);
+ReadRegister(m_Settings.I2cAddress, Bme280Register::Data, data, 8);
 UINT rawt=((UINT)data[3]<<12)|((UINT)data[4]<<4)|(data[5]>>4);
 UINT rawp=((UINT)data[0]<<12)|((UINT)data[1]<<4)|(data[2]>>4);
 UINT rawh=((UINT)data[6]<<8)|data[7];
@@ -154,12 +154,12 @@ Temperature->Set(temp);
 
 FLOAT Bme280::CalculateHumidity(UINT raw, INT fine)
 {
-BYTE h1=pCalibration[25];
-SHORT h2=((WORD)pCalibration[27]<<8)|pCalibration[26];
-BYTE h3=pCalibration[28];
-SHORT h4=((WORD)pCalibration[29]<<4)|(pCalibration[30]&0x0F);
-SHORT h5=((WORD)pCalibration[31]<<4)|((pCalibration[30]>>4)&0x0F);
-BYTE h6=pCalibration[32];
+BYTE h1=m_Calibration[25];
+SHORT h2=((WORD)m_Calibration[27]<<8)|m_Calibration[26];
+BYTE h3=m_Calibration[28];
+SHORT h4=((WORD)m_Calibration[29]<<4)|(m_Calibration[30]&0x0F);
+SHORT h5=((WORD)m_Calibration[31]<<4)|((m_Calibration[30]>>4)&0x0F);
+BYTE h6=m_Calibration[32];
 DOUBLE var1=((DOUBLE)fine)-76800.0;
 DOUBLE var2=(((DOUBLE)h4)*64.0+(((DOUBLE)h5)/16384.0)*var1);
 DOUBLE var3=raw-var2;
@@ -168,22 +168,22 @@ DOUBLE var5=(1.0+(((DOUBLE)h3)/67108864.0)*var1);
 DOUBLE var6=1.0+(((DOUBLE)h6)/67108864.0)*var1*var5;
 var6=var3*var4*(var5*var6);
 DOUBLE h=var6*(1.0-((DOUBLE)h1)*var6/524288.0);
-h=MAX(h, 0);
-h=MIN(h, 100);
+h=Max(h, 0.);
+h=Min(h, 100.);
 return (FLOAT)h;
 }
 
 FLOAT Bme280::CalculatePressure(UINT raw, INT fine)
 {
-WORD p1=((WORD)pCalibration[7]<<8)|pCalibration[6];
-SHORT p2=((WORD)pCalibration[9]<<8)|pCalibration[8];
-SHORT p3=((WORD)pCalibration[11]<<8)|pCalibration[10];
-SHORT p4=((WORD)pCalibration[13]<<8)|pCalibration[12];
-SHORT p5=((WORD)pCalibration[15]<<8)|pCalibration[14];
-SHORT p6=((WORD)pCalibration[17]<<8)|pCalibration[16];
-SHORT p7=((WORD)pCalibration[19]<<8)|pCalibration[18];
-SHORT p8=((WORD)pCalibration[21]<<8)|pCalibration[20];
-SHORT p9=((WORD)pCalibration[23]<<8)|pCalibration[22];
+WORD p1=((WORD)m_Calibration[7]<<8)|m_Calibration[6];
+SHORT p2=((WORD)m_Calibration[9]<<8)|m_Calibration[8];
+SHORT p3=((WORD)m_Calibration[11]<<8)|m_Calibration[10];
+SHORT p4=((WORD)m_Calibration[13]<<8)|m_Calibration[12];
+SHORT p5=((WORD)m_Calibration[15]<<8)|m_Calibration[14];
+SHORT p6=((WORD)m_Calibration[17]<<8)|m_Calibration[16];
+SHORT p7=((WORD)m_Calibration[19]<<8)|m_Calibration[18];
+SHORT p8=((WORD)m_Calibration[21]<<8)|m_Calibration[20];
+SHORT p9=((WORD)m_Calibration[23]<<8)|m_Calibration[22];
 DOUBLE var1=((DOUBLE)fine/2.0)-64000.0;
 DOUBLE var2=var1*var1*((DOUBLE)p6)/32768.0;
 var2=var2+var1*((DOUBLE)p5)*2.0;
@@ -200,17 +200,17 @@ if(var1>0)
 	var2=p*((DOUBLE)p8)/32768.0;
 	p=p+(var1+var2+((DOUBLE)p7))/16.0;
 	p/=100.0;
-	p=MAX(p, 300.0);
-	p=MIN(p, 1100.0);
+	p=Max(p, 300.);
+	p=Min(p, 1100.);
 	}
 return (FLOAT)p;
 }
 
 FLOAT Bme280::CalculateTemperature(UINT raw, INT& fine)
 {
-WORD t1=((WORD)pCalibration[1]<<8)|pCalibration[0];
-SHORT t2=((WORD)pCalibration[3]<<8)|pCalibration[2];
-SHORT t3=((WORD)pCalibration[5]<<8)|pCalibration[4];
+WORD t1=((WORD)m_Calibration[1]<<8)|m_Calibration[0];
+SHORT t2=((WORD)m_Calibration[3]<<8)|m_Calibration[2];
+SHORT t3=((WORD)m_Calibration[5]<<8)|m_Calibration[4];
 DOUBLE var1=((DOUBLE)raw)/16384.0-((DOUBLE)t1)/1024.0;
 var1=var1*((DOUBLE)t2);
 DOUBLE var2=((DOUBLE)raw)/131072.0-((DOUBLE)t1)/8192.0;
@@ -253,17 +253,17 @@ return 0;
 
 VOID Bme280::WriteDeviceSettings()
 {
-BYTE udata=(BYTE)cSettings.HumidityOsr;
-WriteRegister(cSettings.I2cAddress, Bme280Register::HumidityControl, &udata, 1);
-BYTE standby=(BYTE)cSettings.Standby;
-BYTE filter=(BYTE)cSettings.Filter;
+BYTE udata=(BYTE)m_Settings.HumidityOsr;
+WriteRegister(m_Settings.I2cAddress, Bme280Register::HumidityControl, &udata, 1);
+BYTE standby=(BYTE)m_Settings.Standby;
+BYTE filter=(BYTE)m_Settings.Filter;
 udata=(standby<<5)|(filter<<2);
-WriteRegister(cSettings.I2cAddress, Bme280Register::Config, &udata, 1);
-BYTE osrt=(BYTE)cSettings.TemperatureOsr;
-BYTE osrp=(BYTE)cSettings.PressureOsr;
-BYTE mode=(BYTE)cSettings.Mode;
+WriteRegister(m_Settings.I2cAddress, Bme280Register::Config, &udata, 1);
+BYTE osrt=(BYTE)m_Settings.TemperatureOsr;
+BYTE osrp=(BYTE)m_Settings.PressureOsr;
+BYTE mode=(BYTE)m_Settings.Mode;
 udata=(osrt<<5)|(osrp<<2)|mode;
-WriteRegister(cSettings.I2cAddress, Bme280Register::PowerControl, &udata, 1);
+WriteRegister(m_Settings.I2cAddress, Bme280Register::PowerControl, &udata, 1);
 }
 
 }}

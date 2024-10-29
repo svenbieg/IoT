@@ -3,7 +3,7 @@
 //==============
 //
 // Connection:
-// Vss - Sensor - AI - 4.7k+0.1uF - 0V
+// Vss - Sensor - AI - 4.7k - 0V
 //
 
 #pragma once
@@ -42,10 +42,10 @@ public:
 private:
 	// Common
 	VOID OnValueChanged();
-	FLOAT fResistor;
-	FLOAT fVoltage;
-	Handle<AnalogPin> hPin;
-	UINT uErrorTime;
+	UINT m_ErrorTime;
+	Handle<AnalogPin> m_Pin;
+	FLOAT m_Resistor;
+	FLOAT m_Voltage;
 };
 
 }}

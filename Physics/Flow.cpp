@@ -38,8 +38,8 @@ TypedVariable(hname, ml)
 
 Handle<String> Flow::ToString()
 {
-SharedLock lock(cMutex);
-return ToString(tValue, FlowUnits::MillisPerMin);
+SharedLock lock(m_Mutex);
+return ToString(m_Value, FlowUnits::MillisPerMin);
 }
 
 Handle<String> Flow::ToString(INT ml, FlowUnits unit)

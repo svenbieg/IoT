@@ -43,13 +43,13 @@ public:
 private:
 	// Common
 	VOID OnTimerTriggered();
-	Handle<Timer> hTimer;
-	BYTE uPhase;
-	BYTE uPin1;
-	BYTE uPin2;
-	BYTE uPin3;
-	BYTE uPin4;
-	UINT uSteps;
+	BYTE m_Phase;
+	BYTE m_Pin1;
+	BYTE m_Pin2;
+	BYTE m_Pin3;
+	BYTE m_Pin4;
+	UINT m_Steps;
+	Handle<Timer> m_Timer;
 };
 
 }

@@ -27,18 +27,19 @@ namespace Actors {
 // Con-/Destructors
 //==================
 
-StepperMotor::StepperMotor(BYTE upin1, BYTE upin2, BYTE upin3, BYTE upin4):
+StepperMotor::StepperMotor(BYTE pin1, BYTE pin2, BYTE pin3, BYTE pin4):
 Speed(1.f),
-uPhase(0),
-uPin1(upin1),
-uPin2(upin2),
-uPin3(upin3),
-uPin4(upin4)
+m_Phase(0),
+m_Pin1(pin1),
+m_Pin2(pin2),
+m_Pin3(pin3),
+m_Pin4(pin4),
+m_Steps(0)
 {
-SetPinMode(uPin1, PinMode::Output);
-SetPinMode(uPin2, PinMode::Output);
-SetPinMode(uPin3, PinMode::Output);
-SetPinMode(uPin4, PinMode::Output);
+SetPinMode(m_Pin1, PinMode::Output);
+SetPinMode(m_Pin2, PinMode::Output);
+SetPinMode(m_Pin3, PinMode::Output);
+SetPinMode(m_Pin4, PinMode::Output);
 Stop();
 }
 
@@ -58,11 +59,11 @@ Stop();
 if(Speed==0.f)
 	return;
 UINT udt=(UINT)(10000.f-Speed*9000.f);
-uPhase=16;
-uSteps=usteps;
-hTimer=new Timer();
-hTimer->Triggered.Add(this, &StepperMotor::OnTimerTriggered);
-hTimer->StartPeriodic(udt);
+m_Phase=16;
+m_Steps=usteps;
+m_Timer=new Timer();
+m_Timer->Triggered.Add(this, &StepperMotor::OnTimerTriggered);
+m_Timer->StartPeriodic(udt);
 }
 
 VOID StepperMotor::Forward(UINT usteps)
@@ -71,24 +72,24 @@ Stop();
 if(Speed==0.f)
 	return;
 UINT udt=(UINT)(10000.f-Speed*9000.f);
-uPhase=0;
-uSteps=usteps;
-hTimer=new Timer();
-hTimer->Triggered.Add(this, &StepperMotor::OnTimerTriggered);
-hTimer->StartPeriodic(udt);
+m_Phase=0;
+m_Steps=usteps;
+m_Timer=new Timer();
+m_Timer->Triggered.Add(this, &StepperMotor::OnTimerTriggered);
+m_Timer->StartPeriodic(udt);
 }
 
 VOID StepperMotor::Stop()
 {
-if(hTimer)
+if(m_Timer)
 	{
-	hTimer->Stop();
-	hTimer=nullptr;
+	m_Timer->Stop();
+	m_Timer=nullptr;
 	}
-DigitalWrite(uPin1, false);
-DigitalWrite(uPin2, false);
-DigitalWrite(uPin3, false);
-DigitalWrite(uPin4, false);
+DigitalWrite(m_Pin1, false);
+DigitalWrite(m_Pin2, false);
+DigitalWrite(m_Pin3, false);
+DigitalWrite(m_Pin4, false);
 }
 
 
@@ -98,93 +99,93 @@ DigitalWrite(uPin4, false);
 
 VOID StepperMotor::OnTimerTriggered()
 {
-switch(uPhase)
+switch(m_Phase)
 	{
 	case 0:
 	case 16:
 		{
-		DigitalWrite(uPin1, true);
-		DigitalWrite(uPin2, false);
-		DigitalWrite(uPin3, false);
-		DigitalWrite(uPin4, false);
+		DigitalWrite(m_Pin1, true);
+		DigitalWrite(m_Pin2, false);
+		DigitalWrite(m_Pin3, false);
+		DigitalWrite(m_Pin4, false);
 		break;
 		}
 	case 1:
 	case 23:
 		{
-		DigitalWrite(uPin1, true);
-		DigitalWrite(uPin2, true);
-		DigitalWrite(uPin3, false);
-		DigitalWrite(uPin4, false);
+		DigitalWrite(m_Pin1, true);
+		DigitalWrite(m_Pin2, true);
+		DigitalWrite(m_Pin3, false);
+		DigitalWrite(m_Pin4, false);
 		break;
 		}
 	case 2:
 	case 22:
 		{
-		DigitalWrite(uPin1, false);
-		DigitalWrite(uPin2, true);
-		DigitalWrite(uPin3, false);
-		DigitalWrite(uPin4, false);
+		DigitalWrite(m_Pin1, false);
+		DigitalWrite(m_Pin2, true);
+		DigitalWrite(m_Pin3, false);
+		DigitalWrite(m_Pin4, false);
 		break;
 		}
 	case 3:
 	case 21:
 		{
-		DigitalWrite(uPin1, false);
-		DigitalWrite(uPin2, true);
-		DigitalWrite(uPin3, true);
-		DigitalWrite(uPin4, false);
+		DigitalWrite(m_Pin1, false);
+		DigitalWrite(m_Pin2, true);
+		DigitalWrite(m_Pin3, true);
+		DigitalWrite(m_Pin4, false);
 		break;
 		}
 	case 4:
 	case 20:
 		{
-		DigitalWrite(uPin1, false);
-		DigitalWrite(uPin2, false);
-		DigitalWrite(uPin3, true);
-		DigitalWrite(uPin4, false);
+		DigitalWrite(m_Pin1, false);
+		DigitalWrite(m_Pin2, false);
+		DigitalWrite(m_Pin3, true);
+		DigitalWrite(m_Pin4, false);
 		break;
 		}
 	case 5:
 	case 19:
 		{
-		DigitalWrite(uPin1, false);
-		DigitalWrite(uPin2, false);
-		DigitalWrite(uPin3, true);
-		DigitalWrite(uPin4, true);
+		DigitalWrite(m_Pin1, false);
+		DigitalWrite(m_Pin2, false);
+		DigitalWrite(m_Pin3, true);
+		DigitalWrite(m_Pin4, true);
 		break;
 		}
 	case 6:
 	case 18:
 		{
-		DigitalWrite(uPin1, false);
-		DigitalWrite(uPin2, false);
-		DigitalWrite(uPin3, false);
-		DigitalWrite(uPin4, true);
+		DigitalWrite(m_Pin1, false);
+		DigitalWrite(m_Pin2, false);
+		DigitalWrite(m_Pin3, false);
+		DigitalWrite(m_Pin4, true);
 		break;
 		}
 	case 7:
 	case 17:
 		{
-		DigitalWrite(uPin1, true);
-		DigitalWrite(uPin2, false);
-		DigitalWrite(uPin3, false);
-		DigitalWrite(uPin4, true);
+		DigitalWrite(m_Pin1, true);
+		DigitalWrite(m_Pin2, false);
+		DigitalWrite(m_Pin3, false);
+		DigitalWrite(m_Pin4, true);
 		break;
 		}
 	}
-uPhase++;
-if(uPhase==8)
+m_Phase++;
+if(m_Phase==8)
 	{
-	uPhase=0;
-	uSteps--;
+	m_Phase=0;
+	m_Steps--;
 	}
-if(uPhase==24)
+if(m_Phase==24)
 	{
-	uPhase=16;
-	uSteps--;
+	m_Phase=16;
+	m_Steps--;
 	}
-if(uSteps==0)
+if(m_Steps==0)
 	Stop();
 }
 

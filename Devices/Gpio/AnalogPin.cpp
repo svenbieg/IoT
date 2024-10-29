@@ -33,7 +33,7 @@ namespace Devices {
 AnalogPin::AnalogPin(Handle<String> id, BYTE pin):
 GpioPin(id, pin)
 {
-SetPinMode(uPin, PinMode::Input);
+SetPinMode(m_Pin, PinMode::Input);
 Value=new Float(id, 0.0f);
 auto clock=Clock::Get();
 clock->Tick.Add(this, &AnalogPin::OnClockTick);
@@ -52,7 +52,7 @@ clock->Tick.Remove(this);
 
 FLOAT AnalogPin::Read()
 {
-return AnalogRead(uPin);
+return AnalogRead(m_Pin);
 }
 
 
@@ -62,11 +62,11 @@ return AnalogRead(uPin);
 
 VOID AnalogPin::OnClockTick()
 {
-fInput=AnalogRead(uPin);
-if(fInput.GetCount()<20)
+m_Input=AnalogRead(m_Pin);
+if(m_Input.GetCount()<20)
 	return;
-fValue=fInput;
-Value=fValue;
+m_Value=m_Input;
+Value=m_Value;
 }
 
 }}

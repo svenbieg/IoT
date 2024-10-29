@@ -38,10 +38,10 @@ TypedVariable(hname, hpa)
 
 Handle<String> Pressure::ToString()
 {
-SharedLock lock(cMutex);
-if(tValue<0)
+SharedLock lock(m_Mutex);
+if(m_Value<0)
 	return "-";
-return new String("%ihPa", tValue);
+return new String("%ihPa", m_Value);
 }
 
 }

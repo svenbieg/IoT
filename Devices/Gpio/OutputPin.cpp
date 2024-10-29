@@ -30,8 +30,8 @@ namespace Devices {
 OutputPin::OutputPin(Handle<String> id, BYTE pin, BOOL value):
 GpioPin(id, pin)
 {
-SetPinMode(uPin, PinMode::Output);
-DigitalWrite(uPin, value);
+SetPinMode(m_Pin, PinMode::Output);
+DigitalWrite(m_Pin, value);
 Value=new Bool(id, value);
 Value->Changed.Add(this, &OutputPin::OnValueChanged);
 }
@@ -44,7 +44,7 @@ Value->Changed.Add(this, &OutputPin::OnValueChanged);
 VOID OutputPin::OnValueChanged()
 {
 BOOL value=Value;
-DigitalWrite(uPin, value);
+DigitalWrite(m_Pin, value);
 value? Up(this): Down(this);
 }
 

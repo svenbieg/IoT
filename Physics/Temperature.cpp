@@ -38,10 +38,10 @@ TypedVariable(name, deg_c)
 
 Handle<String> Temperature::ToString()
 {
-SharedLock lock(cMutex);
-if(tValue==-300.f)
+SharedLock lock(m_Mutex);
+if(m_Value==-300.f)
 	return "-";
-return new String("%i\260C", (INT)tValue);
+return new String("%i\260C", (INT)m_Value);
 }
 
 }

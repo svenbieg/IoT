@@ -32,13 +32,13 @@ public:
 	PwmPin(Handle<String> Id, BYTE Pin, UINT Period);
 
 	// Common
-	BYTE GetPin()const { return uPin; }
+	BYTE GetPin()const { return m_Pin; }
 	Handle<Float> Value;
 
 private:
 	// Common
 	VOID OnValueChanged();
-	UINT uPeriod;
+	UINT m_Period;
 };
 
 }}

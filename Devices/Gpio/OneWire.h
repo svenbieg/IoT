@@ -32,7 +32,7 @@ public:
 
 private:
 	// Common
-	BYTE uPin;
+	BYTE m_Pin;
 };
 
 }}

@@ -41,7 +41,7 @@ public:
 
 private:
 	// Common
-	static Handle<ShellCommandList> hCurrent;
+	static Handle<ShellCommandList> m_Current;
 };
 
 }

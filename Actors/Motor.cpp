@@ -28,13 +28,13 @@ namespace Actors {
 //==================
 
 Motor::Motor(Handle<String> id, BYTE pin_speed, BYTE pin_fwd, BYTE pin_back):
-uPinBackward(pin_back),
-uPinForward(pin_fwd),
-uPinSpeed(pin_speed)
+m_BackwardPin(pin_back),
+m_ForwardPin(pin_fwd),
+m_SpeedPin(pin_speed)
 {
-SetPinMode(uPinBackward, PinMode::Output);
-SetPinMode(uPinForward, PinMode::Output);
-PwmInit(uPinSpeed, 5000);
+SetPinMode(m_BackwardPin, PinMode::Output);
+SetPinMode(m_ForwardPin, PinMode::Output);
+PwmInit(m_SpeedPin, 5000);
 Speed=new Float(id, 0.f);
 Speed->Changed.Add(this, &Motor::OnSpeedChanged);
 }
@@ -47,14 +47,14 @@ Speed->Changed.Add(this, &Motor::OnSpeedChanged);
 VOID Motor::OnSpeedChanged()
 {
 FLOAT speed=Speed;
-speed=MAX(speed, -1);
-speed=MIN(speed, 1.);
-DigitalWrite(uPinForward, speed>0.f);
-DigitalWrite(uPinBackward, speed<0.f);
+speed=Max(speed, -1.f);
+speed=Min(speed, 1.f);
+DigitalWrite(m_ForwardPin, speed>0.f);
+DigitalWrite(m_BackwardPin, speed<0.f);
 if(speed<0.f)
 	speed*=-1.f;
 UINT duty=(UINT)(speed*5000);
-PwmSetDuty(uPinSpeed, duty);
+PwmSetDuty(m_SpeedPin, duty);
 }
 
 }

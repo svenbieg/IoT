@@ -38,7 +38,7 @@ public:
 private:
 	// Common
 	VOID OnClockSecond();
-	BYTE uPin;
+	BYTE m_Pin;
 };
 
 }}

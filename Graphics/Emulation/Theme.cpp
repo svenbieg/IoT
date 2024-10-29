@@ -10,9 +10,14 @@
 //=======
 
 #include "Fonts/SmallFont.h"
+#include "Graphics/Emulation/Cursor.h"
+#include "Graphics/Emulation/Font.h"
 #include "Theme.h"
 
 using namespace Graphics::Emulation::Fonts;
+
+using EmuCursor=Graphics::Emulation::Cursor;
+using EmuFont=Graphics::Emulation::Font;
 
 
 //===========
@@ -33,55 +38,55 @@ DefaultCursor=new EmuCursor();
 DefaultFont=new SmallFont();
 switch(theme)
 	{
-	case Themes::Dark:
+	case Themes::m_Dark:
 		{
-		BorderBrush=new EmuBrush(Colors::LightGray);
-		ControlBrush=new EmuBrush(Colors::Black);
-		FocusBorderBrush=new EmuBrush(Colors::FocusBorder);
-		FocusBrush=new EmuBrush(Colors::Focus);
-		GrayTextBrush=new EmuBrush(Colors::Gray);
-		HighlightBrush=new EmuBrush(Colors::Highlight);
-		HighlightBorderBrush=new EmuBrush(Colors::HighlightBorder);
-		InactiveHighlightBrush=new EmuBrush(Colors::Silver);
-		LightBorderBrush=new EmuBrush(Colors::Gray);
-		LightControlBrush=new EmuBrush(Colors::BlackGray);
-		LightTextBrush=new EmuBrush(Colors::Gray);
-		TextBrush=new EmuBrush(Colors::White);
-		WindowBrush=new EmuBrush(Colors::Black);
+		BorderBrush=new Brush(Colors::LightGray);
+		ControlBrush=new Brush(Colors::Black);
+		FocusBorderBrush=new Brush(Colors::FocusBorder);
+		FocusBrush=new Brush(Colors::Focus);
+		GrayTextBrush=new Brush(Colors::Gray);
+		HighlightBrush=new Brush(Colors::Highlight);
+		HighlightBorderBrush=new Brush(Colors::HighlightBorder);
+		InactiveHighlightBrush=new Brush(Colors::Silver);
+		LightBorderBrush=new Brush(Colors::Gray);
+		LightControlBrush=new Brush(Colors::BlackGray);
+		LightTextBrush=new Brush(Colors::Gray);
+		TextBrush=new Brush(Colors::White);
+		WindowBrush=new Brush(Colors::Black);
 		break;
 		}
-	case Themes::Light:
+	case Themes::m_Light:
 		{
-		BorderBrush=new EmuBrush(Colors::Gray);
-		ControlBrush=new EmuBrush(Colors::White);
-		FocusBorderBrush=new EmuBrush(Colors::FocusBorder);
-		FocusBrush=new EmuBrush(Colors::Focus);
-		GrayTextBrush=new EmuBrush(Colors::Gray);
-		HighlightBrush=new EmuBrush(Colors::Highlight);
-		HighlightBorderBrush=new EmuBrush(Colors::HighlightBorder);
-		InactiveHighlightBrush=new EmuBrush(Colors::Silver);
-		LightBorderBrush=new EmuBrush(Colors::LightGray);
-		LightControlBrush=new EmuBrush(Colors::WhiteGray);
-		LightTextBrush=new EmuBrush(Colors::Gray);
-		TextBrush=new EmuBrush(Colors::Black);
-		WindowBrush=new EmuBrush(Colors::White);
+		BorderBrush=new Brush(Colors::Gray);
+		ControlBrush=new Brush(Colors::White);
+		FocusBorderBrush=new Brush(Colors::FocusBorder);
+		FocusBrush=new Brush(Colors::Focus);
+		GrayTextBrush=new Brush(Colors::Gray);
+		HighlightBrush=new Brush(Colors::Highlight);
+		HighlightBorderBrush=new Brush(Colors::HighlightBorder);
+		InactiveHighlightBrush=new Brush(Colors::Silver);
+		LightBorderBrush=new Brush(Colors::LightGray);
+		LightControlBrush=new Brush(Colors::WhiteGray);
+		LightTextBrush=new Brush(Colors::Gray);
+		TextBrush=new Brush(Colors::Black);
+		WindowBrush=new Brush(Colors::White);
 		break;
 		}
-	case Themes::Monochrome:
+	case Themes::m_Monochrome:
 		{
-		BorderBrush=new EmuBrush(Colors::White);
-		ControlBrush=new EmuBrush(Colors::Black);
-		FocusBorderBrush=new EmuBrush(Colors::White);
-		FocusBrush=new EmuBrush(Colors::Transparent);
-		GrayTextBrush=new EmuBrush(Colors::White);
-		HighlightBrush=new EmuBrush(Colors::Black);
-		HighlightBorderBrush=new EmuBrush(Colors::White);
-		InactiveHighlightBrush=new EmuBrush(Colors::Black);
-		LightBorderBrush=new EmuBrush(Colors::White);
-		LightControlBrush=new EmuBrush(Colors::Black);
-		LightTextBrush=new EmuBrush(Colors::White);
-		TextBrush=new EmuBrush(Colors::White);
-		WindowBrush=new EmuBrush(Colors::Black);
+		BorderBrush=new Brush(Colors::White);
+		ControlBrush=new Brush(Colors::Black);
+		FocusBorderBrush=new Brush(Colors::White);
+		FocusBrush=new Brush(Colors::Transparent);
+		GrayTextBrush=new Brush(Colors::White);
+		HighlightBrush=new Brush(Colors::Black);
+		HighlightBorderBrush=new Brush(Colors::White);
+		InactiveHighlightBrush=new Brush(Colors::Black);
+		LightBorderBrush=new Brush(Colors::White);
+		LightControlBrush=new Brush(Colors::Black);
+		LightTextBrush=new Brush(Colors::White);
+		TextBrush=new Brush(Colors::White);
+		WindowBrush=new Brush(Colors::Black);
 		break;
 		}
 	}
@@ -96,40 +101,30 @@ Handle<Theme> Theme::Get(Themes theme)
 {
 switch(theme)
 	{
-	case Themes::Dark:
+	case Themes::m_Dark:
 		{
-		if(!Dark)
-			Dark=new Theme(theme);
-		return Dark;
+		if(!m_Dark)
+			m_Dark=new Theme(theme);
+		return m_Dark;
 		}
-	case Themes::Light:
+	case Themes::m_Light:
 		{
-		if(!Light)
-			Light=new Theme(theme);
-		return Light;
+		if(!m_Light)
+			m_Light=new Theme(theme);
+		return m_Light;
 		}
-	case Themes::Monochrome:
+	case Themes::m_Monochrome:
 		{
-		if(!Monochrome)
-			Monochrome=new Theme(theme);
-		return Monochrome;
+		if(!m_Monochrome)
+			m_Monochrome=new Theme(theme);
+		return m_Monochrome;
 		}
 	}
 return nullptr;
 }
 
-Handle<Theme> Theme::Dark;
-Handle<Theme> Theme::Light;
-Handle<Theme> Theme::Monochrome;
-
-
-//=========
-// Brushes
-//=========
-
-Handle<Graphics::Brush> Theme::GetBrush(COLOR c)
-{
-return new EmuBrush(c);
-}
+Handle<Theme> Theme::m_Dark;
+Handle<Theme> Theme::m_Light;
+Handle<Theme> Theme::m_Monochrome;
 
 }}

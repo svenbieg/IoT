@@ -35,14 +35,14 @@ const FLOAT pPtTemp[]={  -40.f,  -30.f,  -20.f,  -10.f,    0.f,   10.f,    20.f,
 // Con-/Destructors
 //==================
 
-Pt1000::Pt1000(Handle<String> id, Handle<AnalogPin> pin, FLOAT vol, FLOAT res):
+Pt1000::Pt1000(Handle<String> id, Handle<AnalogPin> pin, FLOAT volt, FLOAT res):
 Thermometer(id),
-fResistor(res),
-fVoltage(vol),
-hPin(pin),
-uErrorTime(0)
+m_ErrorTime(0),
+m_Pin(pin),
+m_Resistor(res),
+m_Voltage(volt)
 {
-hPin->Value->Changed.Add(this, &Pt1000::OnValueChanged);
+m_Pin->Value->Changed.Add(this, &Pt1000::OnValueChanged);
 }
 
 
@@ -52,23 +52,23 @@ hPin->Value->Changed.Add(this, &Pt1000::OnValueChanged);
 
 VOID Pt1000::OnValueChanged()
 {
-FLOAT ur=hPin->Value;
-FLOAT uges=fVoltage;
-FLOAT i=ur/fResistor;
+FLOAT ur=m_Pin->Value;
+FLOAT uges=m_Voltage;
+FLOAT i=ur/m_Resistor;
 FLOAT rges=uges/i;
-FLOAT r=rges-fResistor;
+FLOAT r=rges-m_Resistor;
 if(r>=842.7f&&r<=1680.f)
 	{
-	FLOAT t=DataRow::Calculate(r, pPtOhm, pPtTemp, ARRAYSIZE(pPtOhm));
+	FLOAT t=DataRow::Calculate(r, pPtOhm, pPtTemp, ArraySize(pPtOhm));
 	Temperature->Set(t);
-	uErrorTime=0;
+	m_ErrorTime=0;
 	}
 else
 	{
 	UINT time=GetTickCount();
-	if(uErrorTime==0)
-		uErrorTime=time;
-	if(time<uErrorTime+5000)
+	if(m_ErrorTime==0)
+		m_ErrorTime=time;
+	if(time<m_ErrorTime+5000)
 		return;
 	Temperature->Set(-300.f);
 	}

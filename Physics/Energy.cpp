@@ -38,8 +38,8 @@ TypedVariable(hname, wh)
 
 Handle<String> Energy::ToString()
 {
-SharedLock lock(cMutex);
-return ToString(tValue);
+SharedLock lock(m_Mutex);
+return ToString(m_Value);
 }
 
 Handle<String> Energy::ToString(INT wh)

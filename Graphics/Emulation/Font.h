@@ -35,16 +35,16 @@ public:
 		}CHARINFO;
 
 	// Common
-	CHARINFO const* GetCharInfo(BYTE Char) { return &pCharacters[Char]; }
-	UINT GetSize()const override { return uSize; }
+	CHARINFO const* GetCharInfo(BYTE Char) { return &m_Characters[Char]; }
+	UINT GetSize()const override { return m_Size; }
 
 protected:
 	// Con-/Destructors
 	Font(UINT Size);
 
 	// Common
-	CHARINFO pCharacters[256];
-	UINT uSize;
+	CHARINFO m_Characters[256];
+	UINT m_Size;
 };
 
 }}

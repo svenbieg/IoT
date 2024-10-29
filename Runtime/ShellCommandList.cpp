@@ -27,7 +27,7 @@ namespace Runtime {
 
 ShellCommandList::ShellCommandList()
 {
-hCurrent=this;
+m_Current=this;
 Add("echo", [](Shell* shell)
 	{
 	if(!shell)
@@ -56,9 +56,9 @@ Add("globals", [](Shell* shell)
 
 Handle<ShellCommandList> ShellCommandList::Get()
 {
-if(!hCurrent)
+if(!m_Current)
 	new ShellCommandList();
-return hCurrent;
+return m_Current;
 }
 
 
@@ -66,6 +66,6 @@ return hCurrent;
 // Common Private
 //================
 
-Handle<ShellCommandList> ShellCommandList::hCurrent;
+Handle<ShellCommandList> ShellCommandList::m_Current;
 
 }

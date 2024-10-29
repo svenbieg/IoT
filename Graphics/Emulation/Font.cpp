@@ -25,9 +25,9 @@ namespace Graphics {
 //============================
 
 Font::Font(UINT size):
-uSize(size)
+m_Size(size)
 {
-ZeroMemory(pCharacters, sizeof(pCharacters));
+ZeroMemory(m_Characters, sizeof(m_Characters));
 }
 
 }}

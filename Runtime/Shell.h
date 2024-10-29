@@ -48,9 +48,9 @@ public:
 
 private:
 	// Common
-	Handle<RandomAccessStream> hStream;
-	INT iLength;
-	TCHAR pCommand[SHELL_CMD_MAX];
+	TCHAR m_Command[SHELL_CMD_MAX];
+	INT m_Length;
+	Handle<RandomAccessStream> m_Stream;
 };
 
 }

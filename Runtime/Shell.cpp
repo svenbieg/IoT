@@ -32,10 +32,11 @@ namespace Runtime {
 //==================
 
 Shell::Shell(Handle<RandomAccessStream> stream):
-hStream(stream),
-iLength(0),
-pCommand()
-{}
+m_Length(0),
+m_Stream(stream)
+{
+m_Command[0]=0;
+}
 
 
 //========
@@ -44,20 +45,20 @@ pCommand()
 
 VOID Shell::Print(LPCSTR text)
 {
-if(!hStream)
+if(!m_Stream)
 	return;
-StreamWriter writer(hStream);
+StreamWriter writer(m_Stream);
 writer.Print(text);
-hStream->Flush();
+m_Stream->Flush();
 }
 
 VOID Shell::Print(Handle<String> text)
 {
-if(!hStream)
+if(!m_Stream)
 	return;
-StreamWriter writer(hStream);
+StreamWriter writer(m_Stream);
 writer.Print(text);
-hStream->Flush();
+m_Stream->Flush();
 }
 
 VOID Shell::Process(Handle<String> cmd)

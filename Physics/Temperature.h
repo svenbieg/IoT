@@ -55,24 +55,24 @@ public:
 	template <class _friend_t> friend class Handle;
 
 	// Con-/Destructors
-	Handle(): pObject(nullptr) {}
-	Handle(_temp_t* Object) { HandleCreate(&pObject, Object); }
-	Handle(Handle<_temp_t>&& Handle)noexcept: pObject(Handle.pObject) { Handle.pObject=nullptr; }
-	~Handle() { HandleClear(&pObject); }
+	Handle(): m_Object(nullptr) {}
+	Handle(_temp_t* Object) { HandleCreate(&m_Object, Object); }
+	Handle(Handle<_temp_t>&& Handle)noexcept: m_Object(Handle.m_Object) { Handle.m_Object=nullptr; }
+	~Handle() { HandleClear(&m_Object); }
 
 	// Access
-	operator FLOAT() { return VariableGet(pObject, -300.f); }
-	_temp_t* operator->()const { return pObject; }
+	operator FLOAT() { return VariableGet(m_Object, -300.f); }
+	_temp_t* operator->()const { return m_Object; }
 
 	// Comparison
-	BOOL operator==(FLOAT Value)const { return VariableEqual(pObject, Value, -300.f); }
+	BOOL operator==(FLOAT Value)const { return VariableEqual(m_Object, Value, -300.f); }
 
 	// Assignment
-	Handle& operator=(FLOAT Value) { VariableAssign(&pObject, Value); return *this; }
-	Handle& operator=(_temp_t* Object) { HandleAssign(&pObject, Object); return *this; }
-	Handle& operator=(Handle<_temp_t> const& Handle) { HandleAssign(&pObject, Handle.pObject); return *this; }
+	Handle& operator=(FLOAT Value) { VariableAssign(&m_Object, Value); return *this; }
+	Handle& operator=(_temp_t* Object) { HandleAssign(&m_Object, Object); return *this; }
+	Handle& operator=(Handle<_temp_t> const& Handle) { HandleAssign(&m_Object, Handle.m_Object); return *this; }
 
 private:
 	// Common
-	_temp_t* pObject;
+	_temp_t* m_Object;
 };

@@ -10,7 +10,6 @@
 //=======
 
 #include "Graphics/RenderTarget.h"
-#include "Brush.h"
 
 
 //===========
@@ -47,9 +46,9 @@ public:
 
 private:
 	// Common
-	Handle<Graphics::Bitmap> hBitmap;
-	POINT ptOffset;
-	RECT rcClip;
+	Handle<Graphics::Bitmap> m_Bitmap;
+	RECT m_Clip;
+	POINT m_Offset;
 };
 
 }}

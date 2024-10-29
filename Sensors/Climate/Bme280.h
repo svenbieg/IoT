@@ -9,7 +9,7 @@
 // Using
 //=======
 
-#include "Core/Timer.h"
+#include "UI/Timer.h"
 #include "Physics/Humidity.h"
 #include "Physics/Pressure.h"
 #include "Sensors/Temperature/Thermometer.h"
@@ -110,7 +110,7 @@ class Bme280: public Sensors::Temperature::Thermometer
 {
 public:
 	// Using
-	using Timer=Core::Timer;
+	using Timer=UI::Timer;
 
 	// Con-/Destructors
 	Bme280(Handle<String> Id, Bme280Settings* Settings=nullptr);
@@ -130,9 +130,9 @@ private:
 	VOID OnTimerTriggered();
 	UINT StandbyToMillis(Bme280Standby Standby);
 	VOID WriteDeviceSettings();
-	Bme280Settings cSettings;
-	Handle<Timer> hTimer;
-	BYTE pCalibration[33];
+	BYTE m_Calibration[33];
+	Bme280Settings m_Settings;
+	Handle<Timer> m_Timer;
 };
 
 }}

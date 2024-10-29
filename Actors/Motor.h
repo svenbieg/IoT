@@ -27,7 +27,7 @@ class Motor: public Object
 {
 public:
 	// Con-/Destructors
-	Motor(Handle<String> Id, BYTE PinSpeed, BYTE PinForward, BYTE PinBackward);
+	Motor(Handle<String> Id, BYTE SpeedPin, BYTE ForwardPin, BYTE BackwardPin);
 
 	// Common
 	Handle<Float> Speed;
@@ -35,9 +35,9 @@ public:
 private:
 	// Common
 	VOID OnSpeedChanged();
-	BYTE uPinBackward;
-	BYTE uPinForward;
-	BYTE uPinSpeed;
+	BYTE m_BackwardPin;
+	BYTE m_ForwardPin;
+	BYTE m_SpeedPin;
 };
 
 }

@@ -38,8 +38,8 @@ TypedVariable(hname, w)
 
 Handle<String> Power::ToString()
 {
-SharedLock lock(cMutex);
-return ToString(tValue);
+SharedLock lock(m_Mutex);
+return ToString(m_Value);
 }
 
 Handle<String> Power::ToString(INT w)

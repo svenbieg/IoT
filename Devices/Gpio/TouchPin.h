@@ -42,8 +42,8 @@ private:
 	VOID DoSet(BOOL Value);
 	WORD GetTreshold();
 	VOID OnClockTick();
-	WORD uAverage;
-	WORD uAvgCount;
+	WORD m_Average;
+	WORD m_AverageCount;
 };
 
 }}

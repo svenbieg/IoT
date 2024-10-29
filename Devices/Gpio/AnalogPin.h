@@ -40,8 +40,8 @@ public:
 private:
 	// Common
 	VOID OnClockTick();
-	Math::Average<FLOAT, 20, 4> fInput;
-	Math::Average<FLOAT, 10> fValue;
+	Math::Average<FLOAT, 20, 4> m_Input;
+	Math::Average<FLOAT, 10> m_Value;
 };
 
 }}

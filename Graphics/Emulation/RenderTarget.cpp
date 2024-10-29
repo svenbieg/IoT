@@ -26,9 +26,9 @@ namespace Graphics {
 //==================
 
 RenderTarget::RenderTarget(Handle<Bitmap> bitmap):
-ptOffset(0, 0),
-rcClip(0, 0, 0, 0),
-hBitmap(bitmap)
+m_Bitmap(bitmap),
+m_Clip(0, 0, 0, 0),
+m_Offset(0, 0)
 {}
 
 
@@ -38,8 +38,8 @@ hBitmap(bitmap)
 
 VOID RenderTarget::Clip(POINT const& offset, RECT const& clip)
 {
-ptOffset=offset;
-rcClip=clip;
+m_Offset=offset;
+m_Clip=clip;
 }
 
 VOID RenderTarget::DrawBitmap(RECT const& dst, Handle<Graphics::Bitmap> bmp, RECT const& src)
@@ -82,9 +82,9 @@ auto font=Convert<Emulation::Font>(Font);
 if(!font)
 	return;
 RECT rc_text(rc);
-rc_text+=ptOffset;
+rc_text+=m_Offset;
 RECT rc_clip(rc_text);
-rc_clip.SetBounds(rcClip);
+rc_clip.SetBounds(m_Clip);
 if(!rc_clip)
 	return;
 if(len==0)
@@ -120,7 +120,7 @@ for(UINT u=0; u<len; u++)
 			if(x>=rc_clip.Right)
 				break;
 			if(pchar[cy*char_width+cx])
-				hBitmap->SetPixel(x, y, color);
+				m_Bitmap->SetPixel(x, y, color);
 			}
 		}
 	}
@@ -133,25 +133,25 @@ DrawPolygon(points, count, brush);
 
 VOID RenderTarget::FillRect(RECT const& rc, Handle<Graphics::Brush> brush)
 {
-COLOR c=Convert<Emulation::Brush>(brush)->GetColor();
+COLOR c=brush->GetColor();
 if(!c.GetAlpha())
 	return;
 RECT rc_fill(rc);
-rc_fill+=ptOffset;
-rc_fill.SetBounds(rcClip);
+rc_fill+=m_Offset;
+rc_fill.SetBounds(m_Clip);
 if(!rc_fill)
 	return;
 for(INT y=rc_fill.Top; y<rc_fill.Bottom; y++)
 	{
 	for(INT x=rc_fill.Left; x<rc_fill.Right; x++)
-		hBitmap->SetPixel(x, y, c);
+		m_Bitmap->SetPixel(x, y, c);
 	}
 }
 
 POINT RenderTarget::GetOffset()
 {
-POINT pt_clip(rcClip.Left, rcClip.Top);
-return pt_clip-ptOffset;
+POINT pt_clip(m_Clip.Left, m_Clip.Top);
+return pt_clip-m_Offset;
 }
 
 SIZE RenderTarget::MeasureText(Handle<Graphics::Font> font, FLOAT scale, LPCTSTR text, UINT len)
@@ -180,19 +180,19 @@ return size;
 
 VOID RenderTarget::SetPixel(INT left, INT top, COLOR c)
 {
-left+=ptOffset.Left;
-if(left<rcClip.Left||left>=rcClip.Right)
+left+=m_Offset.Left;
+if(left<m_Clip.Left||left>=m_Clip.Right)
 	return;
-top+=ptOffset.Top;
-if(top<rcClip.Top||top>=rcClip.Bottom)
+top+=m_Offset.Top;
+if(top<m_Clip.Top||top>=m_Clip.Bottom)
 	return;
-hBitmap->SetPixel((INT)left, (INT)top, c);
+m_Bitmap->SetPixel((INT)left, (INT)top, c);
 }
 
 VOID RenderTarget::Unclip()
 {
-rcClip.Clear();
-ptOffset.Clear();
+m_Clip.Clear();
+m_Offset.Clear();
 }
 
 }}

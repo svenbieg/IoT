@@ -30,14 +30,14 @@ ImpulsePin::ImpulsePin(Handle<String> id, BYTE pin):
 GpioPin(id, pin)
 {
 ImpulsesPerSecond=new Int32(id);
-ImpulseInit(uPin);
+ImpulseInit(m_Pin);
 auto clock=Clock::Get();
 clock->Second.Add(this, &ImpulsePin::OnClockSecond);
 }
 
 ImpulsePin::~ImpulsePin()
 {
-ImpulseClose(uPin);
+ImpulseClose(m_Pin);
 auto clock=Clock::Get();
 clock->Second.Remove(this);
 }
@@ -49,8 +49,8 @@ clock->Second.Remove(this);
 
 VOID ImpulsePin::OnClockSecond()
 {
-ImpulsesPerSecond=ImpulseCount(uPin);
-ImpulseClear(uPin);
+ImpulsesPerSecond=ImpulseCount(m_Pin);
+ImpulseClear(m_Pin);
 }
 
 }}

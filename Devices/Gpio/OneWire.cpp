@@ -26,7 +26,7 @@ namespace Devices {
 //==================
 
 OneWire::OneWire(BYTE upin):
-uPin(upin)
+m_Pin(upin)
 {}
 
 
@@ -40,7 +40,7 @@ BYTE uvalue=0;
 for(BYTE u=0; u<8; u++)
 	{
 	uvalue>>=1;
-	if(OneWireReadBit(uPin))
+	if(OneWireReadBit(m_Pin))
 		uvalue|=0x80;
 	}
 return uvalue;
@@ -61,7 +61,7 @@ ZeroMemory(pbuf, 8);
 BYTE uoldlastzero=0;
 for(UINT uid=0; uid<umax; uid++)
 	{
-	if(!OneWireReset(uPin))
+	if(!OneWireReset(m_Pin))
 		return 0;
 	Write(0xF0);
 	BYTE uidbit=1;
@@ -70,8 +70,8 @@ for(UINT uid=0; uid<umax; uid++)
 	BYTE ulastzero=0;
 	do
 		{
-		BOOL bval=OneWireReadBit(uPin);
-		BOOL bcmp=OneWireReadBit(uPin);
+		BOOL bval=OneWireReadBit(m_Pin);
+		BOOL bcmp=OneWireReadBit(m_Pin);
 		if(bval&&bcmp)
 			return 0;
 		if(bval==bcmp)
@@ -97,7 +97,7 @@ for(UINT uid=0; uid<umax; uid++)
 			{
 			pbuf[uidbyte]&=~uidmask;
 			}
-		OneWireWriteBit(uPin, bval);
+		OneWireWriteBit(m_Pin, bval);
 		uidbit++;
 		uidmask<<=1;
 		if(uidmask==0)
@@ -120,7 +120,7 @@ return uidcount;
 
 BOOL OneWire::Select(UINT64 uid)
 {
-if(!OneWireReset(uPin))
+if(!OneWireReset(m_Pin))
 	return false;
 Write(0x55);
 auto pid=(BYTE*)&uid;
@@ -133,7 +133,7 @@ VOID OneWire::Write(BYTE uvalue)
 {
 for(BYTE u=0; u<8; u++)
 	{
-	OneWireWriteBit(uPin, uvalue&0x01);
+	OneWireWriteBit(m_Pin, uvalue&0x01);
 	uvalue>>=1;
 	}
 }

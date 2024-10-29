@@ -27,9 +27,9 @@ namespace Devices {
 
 PwmPin::PwmPin(Handle<String> id, BYTE pin, UINT period):
 GpioPin(id, pin),
-uPeriod(period)
+m_Period(period)
 {
-PwmInit(uPin, uPeriod);
+PwmInit(m_Pin, m_Period);
 Value=new Float(id, 0.f);
 Value->Changed.Add(this, &PwmPin::OnValueChanged);
 }
@@ -41,7 +41,7 @@ Value->Changed.Add(this, &PwmPin::OnValueChanged);
 
 VOID PwmPin::OnValueChanged()
 {
-PwmSetDuty(uPin, (UINT)(Value*uPeriod));
+PwmSetDuty(m_Pin, (UINT)(Value*m_Period));
 }
 
 }}

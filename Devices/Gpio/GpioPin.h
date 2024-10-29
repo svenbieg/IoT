@@ -31,8 +31,8 @@ public:
 	using PinMap=Collections::Map<Handle<String>, GpioPin*>;
 
 	// Common
-	Handle<String> GetId()const { return hId; }
-	BYTE GetPin()const { return uPin; }
+	Handle<String> GetId()const { return m_Id; }
+	BYTE GetPin()const { return m_Pin; }
 	static Handle<PinMap> Pins;
 
 protected:
@@ -41,8 +41,8 @@ protected:
 	~GpioPin();
 
 	// Common
-	Handle<String> hId;
-	BYTE uPin;
+	Handle<String> m_Id;
+	BYTE m_Pin;
 };
 
 }}

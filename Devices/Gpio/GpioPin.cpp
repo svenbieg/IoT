@@ -32,17 +32,17 @@ Handle<GpioPin::PinMap> GpioPin::Pins;
 //============================
 
 GpioPin::GpioPin(Handle<String> id, BYTE pin):
-hId(id),
-uPin(pin)
+m_Id(id),
+m_Pin(pin)
 {
 if(!Pins)
 	Pins=new PinMap();
-Pins->Add(hId, this);
+Pins->Add(m_Id, this);
 }
 
 GpioPin::~GpioPin()
 {
-Pins->Remove(hId);
+Pins->Remove(m_Id);
 if(Pins->GetCount()==0)
 	Pins=nullptr;
 }

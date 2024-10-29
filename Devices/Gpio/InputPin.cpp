@@ -32,17 +32,17 @@ namespace Devices {
 InputPin::InputPin(Handle<String> id, BYTE pin):
 GpioPin(id, pin)
 {
-SetPinMode(uPin, PinMode::Input);
-BOOL value=DigitalRead(uPin);
+SetPinMode(m_Pin, PinMode::Input);
+BOOL value=DigitalRead(m_Pin);
 Value=new Bool(id, value);
-AttachInterrupt(uPin);
+AttachInterrupt(m_Pin);
 auto clock=Clock::Get();
 clock->Tick.Add(this, &InputPin::OnClockTick);
 }
 
 InputPin::~InputPin()
 {
-DetachInterrupt(uPin);
+DetachInterrupt(m_Pin);
 auto clock=Clock::Get();
 clock->Tick.Remove(this);
 }
@@ -55,7 +55,7 @@ clock->Tick.Remove(this);
 VOID InputPin::DoChange()
 {
 BOOL old_value=Value;
-BOOL new_value=DigitalRead(uPin);
+BOOL new_value=DigitalRead(m_Pin);
 if(old_value==new_value)
 	{
 	Value=!new_value;
@@ -73,7 +73,7 @@ else
 
 VOID InputPin::OnClockTick()
 {
-BOOL changed=DetectInterrupt(uPin);
+BOOL changed=DetectInterrupt(m_Pin);
 if(changed)
 	Application::Current->Dispatch(this, &InputPin::DoChange);
 }
